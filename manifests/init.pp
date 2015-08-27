@@ -29,7 +29,7 @@
 #
 # === Authors
 #
-# Author Name <author@domain.com>
+# Matthew Nicholson <sjoeboo@sjoeboo.com>
 #
 # === Copyright
 #
