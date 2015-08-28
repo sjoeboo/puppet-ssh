@@ -1,5 +1,5 @@
 # ssh
-
+[![Build Status](https://travis-ci.org/sjoeboo/puppet-ssh.svg?branch=master)](https://travis-ci.org/sjoeboo/puppet-ssh)
 #### Table of Contents
 
 1. [Overview](#overview)
