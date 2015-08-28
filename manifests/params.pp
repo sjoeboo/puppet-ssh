@@ -11,7 +11,13 @@ class ssh::params {
       $server_config_group  = 'root'
       $server_config_mode   = '0600'
       $client_package       = 'openssh-clients'
-      
+      $port                 = '22'
+      $addressfamily        = nil
+      $listenaddress        = []
+      $protocol             = nil
+      $host_keys            = ['/etc/ssh/ssh_host_rsa_key','/etc/ssh/ssh_host_ecdsa_key','/etc/ssh/ssh_host_ed25519_key']
+
+
     }
     default: {
       fail("Unsupported osfamily ${::osfamily}, currently only supports Debian and RedHat")
