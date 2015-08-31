@@ -4,6 +4,7 @@ class ssh::params {
       $service_name = 'ssh'
     }
     'RedHat': {
+      #All defaults from RHEL7 sshd_config
       $service_name                             = 'sshd'
       $server_package                           = 'openssh-server'
       $server_config_path                       = '/etc/ssh/sshd_config'
@@ -39,11 +40,37 @@ class ssh::params {
       $gssapistrictacceptorcheck                = 'yes'
       $gssapikeyexchange                        = 'no'
       $gssapienablek5users                      = 'no'
+      $usepam                                   = 'yes'
+      $allowagentforwarding                     = 'yes'
+      $allowtcpforwarding                       = 'yes'
+      $gatewayports                             = 'no'
+      $x11forwarding                            = 'yes'
+      $x11displayoffset                         = 10
+      $x11uselocalhost                          = 'yes'
+      $permittty                                = 'yes'
+      $printmotd                                = 'yes'
+      $printlastlog                             = 'yes'
+      $tcpkeepalive                             = 'yes'
+      $uselogin                                 = 'no'
+      $useprivilegeseparation                   = 'sandbox'
+      $permituserenvironment                    = 'no'
+      $compression                              = 'delayed'
+      $clientaliveinterval                      = 0
+      $clientalivecountmax                      = 3
+      $showpatchlevel                           = 'no'
+      $usedns                                   = 'yes'
+      $pidfile                                  = '/var/run/sshd.pid'
+      $maxstartups                              = '10:30:100'
+      $permittunnel                             = 'no'
+      $chrootdirectory                          = 'none'
+      $versionaddendum                          = 'none'
+      $banner                                   = 'none'
+      $subsystems                               = {'sftp' => '/usr/libexec/openssh/sftp-server' }
+      $acceptenv                                = ['LANG','LC_CTYPE','LC_NUMERIC','LC_TIME','LC_COLLATE','LC_MONETARY','LC_MESSAGES','LC_PAPER','LC_NAME','LC_ADDRESS','LC_TELEPHONE','LC_MEASUREMENT','LC_IDENTIFICATION','LC_ALL','LANGUAGE','XMODIFIERS']
       $allowusers                               = []
       $allwgroups                               = []
       $denyusers                                = []
       $denygroups                               = []
-
     }
     default: {
       fail("Unsupported osfamily ${::osfamily}, currently only supports Debian and RedHat")

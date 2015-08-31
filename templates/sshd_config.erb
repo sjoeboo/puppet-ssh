@@ -46,65 +46,61 @@ KerberosGetAFSToken <%= @kerberosgetafstoken %>
 KerberosUseKuserok <%= @kerberosusekuserok %>
 <% end -%>
 
-# GSSAPI options
-GSSAPIAuthentication yes
-GSSAPICleanupCredentials no
-#GSSAPIStrictAcceptorCheck yes
-#GSSAPIKeyExchange no
-#GSSAPIEnablek5users no
+<% if @gssapiauthentication == 'yes' %>
+GSSAPIAuthentication <%= @gssapiauthentication %>
+GSSAPICleanupCredentials <%= @gssapicleanupcredentials  %>
+#GSSAPIStrictAcceptorCheck <%= @gssapistrictacceptorcheck %>
+#GSSAPIKeyExchange <%= @gssapikeyexchange %>
+#GSSAPIEnablek5users <%= @gssapienablek5users %>
+<% end -%>
 
-# Set this to 'yes' to enable PAM authentication, account processing,
-# and session processing. If this is enabled, PAM authentication will
-# be allowed through the ChallengeResponseAuthentication and
-# PasswordAuthentication.  Depending on your PAM configuration,
-# PAM authentication via ChallengeResponseAuthentication may bypass
-# the setting of "PermitRootLogin without-password".
-# If you just want the PAM account and session checks to run without
-# PAM authentication, then enable this but set PasswordAuthentication
-# and ChallengeResponseAuthentication to 'no'.
-# WARNING: 'UsePAM no' is not supported in Red Hat Enterprise Linux and may cause several
-# problems.
-UsePAM yes
+UsePAM <%= @usepam %>
 
-#AllowAgentForwarding yes
-#AllowTcpForwarding yes
-#GatewayPorts no
-X11Forwarding yes
-#X11DisplayOffset 10
-#X11UseLocalhost yes
-#PermitTTY yes
-#PrintMotd yes
-#PrintLastLog yes
-#TCPKeepAlive yes
-#UseLogin no
-UsePrivilegeSeparation sandbox    # Default for new installations.
-#PermitUserEnvironment no
-#Compression delayed
-#ClientAliveInterval 0
-#ClientAliveCountMax 3
-#ShowPatchLevel no
-#UseDNS yes
-#PidFile /var/run/sshd.pid
-#MaxStartups 10:30:100
-#PermitTunnel no
-#ChrootDirectory none
-#VersionAddendum none
+AllowAgentForwarding <%= @allowagentforwarding  %>
+AllowTcpForwarding <%= @allowtcpforwarding  %>
+GatewayPorts <%= @gatewayports %>
+X11Forwarding <%= @x11forwarding  %>
+X11DisplayOffset <%= @x11displayoffset %>
+X11UseLocalhost <%= @x11uselocalhost  %>
+PermitTTY <%= @permittty %>
+PrintMotd <%= @printmotd  %>
+PrintLastLog <%= @printlastlog %>
+TCPKeepAlive <%= @tcpkeepalive %>
+UseLogin <%= @uselogin %>
+UsePrivilegeSeparation <%= @useprivilegeseparation  %>
+PermitUserEnvironment <%= @permituserenvironment  %>
+Compression <%= @compression  %>
+ClientAliveInterval <%= @clientaliveinterval %>
+ClientAliveCountMax <%= @clientalivecountmax  %>
+ShowPatchLevel <%= @showpatchlevel  %>
+UseDNS <%= @usedns %>
+PidFile <%= @pidfile   %>
+MaxStartups <%= @maxstartups %>
+PermitTunnel <%= @permittunnel %>
+ChrootDirectory <%= @chrootdirectory  %>
+VersionAddendum <%= @versionaddendum %>
 
-# no default banner path
-#Banner none
+<%if @banner != 'none' %>
+Banner <%= banner %>
+<% end -%>
 
-# Accept locale-related environment variables
-AcceptEnv LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES
-AcceptEnv LC_PAPER LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT
-AcceptEnv LC_IDENTIFICATION LC_ALL LANGUAGE
-AcceptEnv XMODIFIERS
+AcceptEnv <%= @acceptenv.join(' ') %>
 
-# override default of no subsystems
-Subsystem sftp  /usr/libexec/openssh/sftp-server
+<% @subsystems.each_pair do |name,server| %>
+Subsystem <%= name %> <% server %>
+<% end -%>
 
-# Example of overriding settings on a per-user basis
-#Match User anoncvs
-# X11Forwarding no
-# AllowTcpForwarding no
-# PermitTTY no
-# ForceCommand cvs server
+#Allow user/group rules
+<% if @allowusers.length != 0 %>
+AllowUsers <%= @allowusers.join(' ') %>
+<% end -%>
+<% if @allowgroups.length != 0 %>
+AllowGroups <%= @allowgroups.join(' ') %>
+<% end -%>
+#Deny user/group rules
+<% if @denyusers.length != 0 %>
+DenyUsers <%= @denyusers.join(' ') %>
+<% end -%>
+<% if @denygroups.length != 0 %>
+DenyGroups <%= @denygroups.join(' ') %>
+<% end -%>
