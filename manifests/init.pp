@@ -49,7 +49,7 @@ class ssh (
   $protocol                                 = $ssh::params::protocol,
   $host_keys                                = $ssh::params::host_keys,
   $syslogfacility                           = $ssh::params::syslogfacility,
-  $loglevel                                 = $ssh::params::loglevel,
+  $server_loglevel                          = $ssh::params::server_loglevel,
   $logingracetime                           = $ssh::params::logingracetime,
   $permitrootlogin                          = $ssh::params::permitrootlogin,
   $strictmodes                              = $ssh::params::strictmodes,
@@ -101,7 +101,7 @@ class ssh (
   $allowusers                               = $ssh::params::allowusers,
   $allwgroups                               = $ssh::params::allwgroups,
   $denyusers                                = $ssh::params::denyusers,
-  $denygroups                               = $ssh::params::denygroups,
+  $denygroups                               = $ssh::params::denygroups
   ){
 
 
