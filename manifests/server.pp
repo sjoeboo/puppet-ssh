@@ -35,14 +35,13 @@
 #
 # Copyright 2015 Your name here, unless otherwise noted.
 #
-class ssh (
+class ssh::server (
   $service_name                             = $ssh::params::service_name,
   $server_package                           = $ssh::params::server_package,
   $server_config_path                       = $ssh::params::server_config_path,
   $server_config_owner                      = $ssh::params::server_config_owner,
   $server_config_group                      = $ssh::params::server_config_group,
   $server_config_mode                       = $ssh::params::server_config_mode,
-  $client_package                           = $ssh::params::client_package,
   $port                                     = $ssh::params::port,
   $addressfamily                            = $ssh::params::addressfamily,
   $listenaddress                            = $ssh::params::listenaddress,
@@ -104,5 +103,25 @@ class ssh (
   $denygroups                               = $ssh::params::denygroups
   ){
 
+  #Install and configure SSH::server
 
+  #Install
+  package { $server_package:
+    ensure => installed,
+  }
+  file { '$server_config_path':
+    ensure  => file,
+    mode    => $server_config_mode,
+    owner   => $server_config_owner,
+    group   => $server_config_group,
+    content => template('ssh/sshd_config.erb'),
+    require => Package[$server_package]
+  }
+  service { $service_name:
+    ensure     => running,
+    enable     => true,
+    hasrestart => true,
+    hasstatus  => true,
+    subscribe  => File[$server_config_path]
+  }
 }
