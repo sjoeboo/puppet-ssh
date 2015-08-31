@@ -6,6 +6,7 @@ AddressFamily <%= addressfamily %>
 <% @listenaddress.each do |address| %>
 ListenAddress <%= address %>
 <% end -%>
+<% end -%>
 <% if @protocol %>
 Protocol <%= @protocol %>
 <% end -%>
@@ -14,64 +15,36 @@ Protocol <%= @protocol %>
 HostKey <%= @key %>
 <% end -%>
 
-# Lifetime and size of ephemeral version 1 server key
-#KeyRegenerationInterval 1h
-#ServerKeyBits 1024
+SyslogFacility <%= @syslogfacility %>
+LogLevel <%= @loglevel %>
 
-# Ciphers and keying
-#RekeyLimit default none
+LoginGraceTime <%= @logingracetime %>
+PermitRootLogin <%= @permitrootlogin %>
+StrictModes <%= @strictmodes %>
+MaxAuthTries <%= @maxauthtries %>
+MaxSessions <%= @maxsessions %>
 
-# Logging
-# obsoletes QuietMode and FascistLogging
-#SyslogFacility AUTH
-SyslogFacility AUTHPRIV
-#LogLevel INFO
+RSAAuthentication <%= @rsaauthentication %>
+PubkeyAuthentication <%= @publickeyauthentication %>
 
-# Authentication:
+AuthorizedKeysFile  <%= @authorizedkeysfile %>
 
-#LoginGraceTime 2m
-PermitRootLogin yes
-#StrictModes yes
-#MaxAuthTries 6
-#MaxSessions 10
+<% if AuthorizedPrincipalsFile %>
+AuthorizedPrincipalsFile <%= @authorizedprincipalsfile %>
+<% end -%>
 
-#RSAAuthentication yes
-#PubkeyAuthentication yes
+PasswordAuthentication <%= @passwordauthentication %>
 
-# The default is to check both .ssh/authorized_keys and .ssh/authorized_keys2
-# but this is overridden so installations will only check .ssh/authorized_keys
-AuthorizedKeysFile  .ssh/authorized_keys
+ChallengeResponseAuthentication <%= @challengeresponseauthentication %>
 
-#AuthorizedPrincipalsFile none
-
-#AuthorizedKeysCommand none
-#AuthorizedKeysCommandUser nobody
-
-# For this to work you will also need host keys in /etc/ssh/ssh_known_hosts
-#RhostsRSAAuthentication no
-# similar for protocol version 2
-#HostbasedAuthentication no
-# Change to yes if you don't trust ~/.ssh/known_hosts for
-# RhostsRSAAuthentication and HostbasedAuthentication
-#IgnoreUserKnownHosts no
-# Don't read the user's ~/.rhosts and ~/.shosts files
-#IgnoreRhosts yes
-
-# To disable tunneled clear text passwords, change to no here!
-#PasswordAuthentication yes
-#PermitEmptyPasswords no
-PasswordAuthentication yes
-
-# Change to no to disable s/key passwords
-ChallengeResponseAuthentication yes
-#ChallengeResponseAuthentication no
-
+<% if @kerberosauthentication == 'yes' %>
 # Kerberos options
-#KerberosAuthentication no
-#KerberosOrLocalPasswd yes
-#KerberosTicketCleanup yes
-#KerberosGetAFSToken no
-#KerberosUseKuserok yes
+KerberosAuthentication <%= @kerberosauthentication %>
+KerberosOrLocalPasswd <%= @kerberosrrlocalpasswd %>
+KerberosTicketCleanup <%= @kerberosticketcleanup %>
+KerberosGetAFSToken <%= @kerberosgetafstoken %>
+KerberosUseKuserok <%= @kerberosusekuserok %>
+<% end -%>
 
 # GSSAPI options
 GSSAPIAuthentication yes
